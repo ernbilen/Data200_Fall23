@@ -1,0 +1,132 @@
+---
+title: "DATA 200: Data Systems for Data Analytics"
+author: "Eren Bilen"
+institute: "Dickinson College"
+from: markdown+emoji
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+format:
+  revealjs:
+    theme: [default,custom.scss]
+    incremental: false
+    logo: "assets/dickinson_logo.jpg"
+    footer: "[https://ernbilen.github.io](https://ernbilen.github.io)"
+    fontsize: 2em
+    highlight-style: github
+    slide-number: c/t
+    smooth-scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Broad View of Data Systems
+
+-   **Def:** A **system** is defined as
+    -   A regularly interacting or interdependent group of items forming a unified whole.
+    -   An organization forming a network for serving a common purpose.
+-   A system incorporates multiple interdependent pieces that are organized and work together to serve a common purpose.
+
+# Broad View of Data Systems
+
+-   Def: Data systems are those systems whose focus is on the organization and structure of data, and the means by which such data can be obtained from the provider of the data by the user or client of the data.
+    -   Most common is the relational database system.
+        -   Why?
+-   Data may be accessible in local data repositories or over the internet (cloud).
+-   Data can be static , can be dynamic , and in real-time as a stream of ever-changing data. E.g. .csv files vs. Amazon, Twitter..
+
+# Data Systems Principals
+
+-   Data System Provider: Entity, consisting of hardware, software, and possible network infrastructure, that hosts the data, provides organization, and allows access through a well-defined interface.
+-   Data System Client: Local software and hardware whose goal is to acquire data from one or more providers and to manage and transform the data to make it useful for analysis.
+-   Resource Owner: Entity that owns the resource (data, organizational resources, etc ).
+
+# Data Systems Principals
+
+![](assets/img/image3.png){height="87%"}
+
+# Example
+
+-   Suppose a social scientist wrote software to gather demographic information from The Movie Database (TMDB) of users and their top-rated movies.
+    -   \_\_\_\_\_\_\_\_\_\_\_\_\_\_ is the Data System Client (referred to as "client").
+    -   \_\_\_\_\_\_\_\_\_\_\_\_\_\_ are the Resource Owners.
+    -   \_\_\_\_\_\_\_\_\_\_\_\_\_\_ is the Data System Provider (referred to as "provider").
+
+# Data System Architecture
+
+![](assets/img/image4.png){height="400"}
+
+# Three Main Sources of Data
+
+-   **Local files:** files downloaded or present in the file system.
+    -   Individual files have a format that specifies the structure of the data.
+
+    -   Common formats include `.txt` , `.docx` , `.csv` , and `.html` .
+
+. . .
+
+-   **Relational databases:** provides data in the form of relational tables in response to queries .
+    -   Example systems include servers running Oracle, MySQL, and PostgreSQL.
+
+# Sources of Data Continued
+
+-   API Service Providers : "Application Programming Interface, (API)" allows clients to access data over the network.
+    -   Automates data access + download for client
+    -   Social media, government organizations...
+    -   Sometimes free, sometimes requires payment
+    -   Data may be public or may be protected, (i.e. you may have limited access, e.g. Twitter)
+    -   Much quicker than web-scraping if you can get what you need using an API
+
+# API Service Provider Examples
+
+![](assets/img/image5.png){height="50%"}
+
+# Web-scraping
+
+-   Web-scraping : Writing code to "scrape" data from webpages in an automated way.
+    -   Sometimes called "crawling" :space_invader:
+    -   Requires coding + lots of trial an error
+    -   May be prohibited by the data provider (need to check terms of use)
+    -   Could provide you data that is not previously analyzed (due to barriers of accessing it)
+
+# Data Form
+
+Our data models define the following for each form of data. 
+
+- The structure of the data 
+- The operations that may be executed against data
+- The constraints that govern valid values for data in the model
+
+# The Three Main Data Models
+
+In this course we will cover the three main data models:
+
+1\. Tabular data model
+
+2\. Relational data model
+
+3\. Hierarchical data model
+
+# 1. Tabular Data
+
+-   Structured in rows and columns.
+    -   Constraints ensure, for example, that there are no repeated rows and that columns represent individual variables.
+    -   Tabular operations allow us to access subsets of data, to merge multiple tables together, and to mutate tables to meet logical constraints.
+
+# 2. Relational Data Model
+
+-   Structure: consists of multiple database tables
+    -   Operations: Allows for database queries
+    -   Constraints: all entries in a column must have the same type (like in tabular data), and tables are appropriately linked to facilitate queries involving data that are spread across multiple tables (for example, data on both students and courses they are registered for must include student ID).
+
+# 3. Hierarchical Data Model
+
+-   Structured into the shape of a tree , so that some data entries are stored as children of other entries.
+    -   An example is the file system on your computer, where files are like children, stored in folders.
+    -   The operations allow us to traverse that tree to locate and extract data stored at different places, or to create new tress and insert data.
+    -   The constraints are that the representation of the data really forms a tree, can constrain the shape of the tree, and can constrain the data types allowed at various places in the tree.
+
+# Keep in mind: End Goal
+
+-   The end goal of a data system client is not just to acquire the data, but to be able to use the data for some downstream objective, such as exploration, visualization, or analysis.
+    -   Hence requiring data to be stored in proper form, follow the constraints of that form...

@@ -1,0 +1,386 @@
+---
+title: "DATA 200: Data Systems for Data Analytics"
+from: markdown+emoji
+author: "Eren Bilen"
+institute: "Dickinson College"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+format:
+  revealjs:
+    theme: [default,custom.scss]
+    incremental: false
+    logo: "assets/dickinson_logo.jpg"
+    footer: "[github.com/ernbilen/Data200_Spring23](https://github.com/ernbilen/Data200_Spring23)"
+    fontsize: 2em
+    highlight-style: github
+    slide-number: c/t
+    history: false
+    chalkboard: 
+      boardmarker-width: 5
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Starting the Jupyter Notebook Server
+
+-   The easiest way to start up Jupyter is by launching it through
+    Anaconda Navigator
+
+::: {.column width="45%"}
+![](assets/img/image3.png){width="75%"}
+:::
+
+::: {.column width="45%"}
+::: {style="font-size: 26px;"}
+Click Launch under Jupyter Notebook
+:::
+:::
+
+# Starting the Jupyter Notebook Server
+
+-   Alternately, you can run the following command in a terminal window:
+
+$\hspace{1cm}$ `jupyter notebook`
+
+![](assets/img/image4.png)
+
+# Jupyter Notebook Server
+
+-   When you start Jupyter, it will open your default browser to the
+    following URL: `http://localhost:8888/tree`
+-   Your browser should look something like this:
+    ![](assets/img/image5.png){width="70%"}
+
+# Notebook Server
+
+-   Note that right now you are not actually running a Notebook, but
+    instead you are just running a Notebook server. ![](assets/img/image5.png)
+
+# Creating a Notebook
+
+-   To create a new notebook, click the New button (upper right) and it
+    will open a list of choices. Let's choose Python 3.
+    ![](assets/img/image6.png)
+
+# Naming a Notebook
+
+The top of the page is the word Untitled . Move your mouse over the word
+Untitled and click on it to rename the notebook to My First Notebook .
+Note that this will also change the name of the file.
+
+::: {layout-ncol="1"}
+![](assets/img/image7.png){width="4.5in"}
+
+![](assets/img/image8.png){width="4.5in"}
+:::
+
+# Running Cells
+
+-   A notebook's cell defaults to using code whenever you first create
+    one, and that cell uses the kernel that you chose when you started
+    the notebook (in our case Python 3).
+    -   Add the following code to the cell: `print("Hello Jupyter!")`
+-   To execute a cell, you can select the cell and press the Run button.
+    (Keyboard shortcut: Shift + Enter)
+
+![](assets/img/image9.png){width="3in"}
+
+# Code in Jupyter Notebooks
+
+-   If you have multiple cells in your notebook, and you run the cells
+    in order, you can share your variables and imports across cells.
+-   This makes it easy to separate your code into logical chunks without
+    the need to reimport libraries or recreate variables or functions in
+    every cell.
+-   When you run a cell, you will notice that there are some square
+    braces next to the word In to the left of the cell. The square
+    braces will auto fill with a number that indicates the order that
+    you ran the cells.
+
+# The Menus
+
+-   The Jupyter Notebook has several menus that you can use to interact
+    with your Notebook:
+
+    :arrow_forward: File <br> :arrow_forward: Edit <br> :arrow_forward:
+    View <br> :arrow_forward: Insert <br> :arrow_forward: Cell <br>
+    :arrow_forward: Kernel <br> :arrow_forward: Widgets <br>
+    :arrow_forward: Help
+
+# The Menus
+
+-   The first menu is the File menu. Here you can create a new Notebook
+    or open a preexisting one. This is also where you would go to rename
+    a Notebook.
+    -   The Save and Checkpoint option allows you to create checkpoints
+        that you can roll back to if you need to.
+-   The Edit menu can be used cut, copy, and paste cells. This is also
+    where you would go if you wanted to delete, split, or merge a cell.
+    You can reorder cells here too.
+-   The View menu is useful for toggling the visibility of the header
+    and toolbar. You can also toggle Line Numbers within cells on or
+    off.
+
+# The Menus
+
+-   The Insert menu is just for inserting cells above or below the
+    currently selected cell.
+
+-   The Cell menu allows you to run one cell, a group of cells, or all
+    the cells. You can also go here to change a cell's type, although
+    the toolbar is more intuitive for that.
+
+    -   The other handy feature in this menu is the ability to clear a
+        cell's output. If you are planning to share your Notebook with
+        others, you will probably want to clear the output first so that
+        the next person can run the cells themselves.
+
+# Adding Rich Content
+
+-   Jupyter Notebook supports adding rich content to its cells.
+    -   There are technically four cell types: `Code`, `Markdown` ,
+        `Raw     NBConvert`, and `Heading` .
+    -   The `Heading` cell type is no longer supported. Instead, you are
+        supposed to use `Markdown` for your Headings.
+    -   The `Raw NBConvert` cell type is only intended for special use
+        cases when using the `nbconvert` command line tool. Basically,
+        it allows you to control the formatting in a very specific way
+        when converting from a Notebook to another format.
+    -   The primary cell types that you will use are the `Code` and
+        `Markdown` cell types.
+
+# Styling Your Text
+
+-   Jupyter Notebook supports Markdown, which is a markup language that
+    is a superset of HTML.
+-   Set a new cell to Markdown and add the following text to the cell:
+
+::: {style="font-size: 38px;"}
+    Use single *underscores* or single *asterisks* to get italics
+:::
+
+![](assets/img/image10.png)
+
+# Styling Your Text
+
+-   When you run the cell, the output should look like this:
+    ![](assets/img/image11.png)
+
+# Styling Your Text
+
+-   To edit a Markdown cell after it has been run, just double click the
+    cell.
+    -   To make the text bold, use a double underscore or double
+        asterisk. ![](assets/img/image12.png)
+
+# Headers
+
+-   Headers are created in Markdown using the pound sign.
+    -   The more pound signs you use, the smaller the header. Jupyter
+        Notebook preview it for you: 
+        
+![](assets/img/image13.png){width="70%"}
+
+# Headers
+
+-   When you run the cell, it will look like this:
+    ![](assets/img/image14.png){width="70%"}
+
+# Additional Options
+
+-   You can switch to $\texttt{monospace}$ font with a back single
+    quotation mark (\`) E.g., \`$\texttt{string}$\`
+    -   This is useful if you want to include commands or Python output
+        in the Markdown cell.
+-   Sometimes markdown doesn't make line breaks when you want them. To
+    force a line break, use the following: $\texttt{<br>}$
+    -   Use the greater than sign ($\texttt{>}$) followed by a space to
+        achieve an indent until the next carriage return.
+
+# Bulleted List
+
+-   To create bullet points, use one of the following methods. Note that
+    each bullet point must be on its own line.
+    -   An asterisks ( \* ) followed by one or two spaces
+    -   A hyphen ( - ) followed by one or two spaces
+    -   To create a sub-bullet, press Tab before entering the bullet
+        point before using one of the methods described above.
+
+# 
+
+::: {layout-ncol="2"}
+![](assets/img/image16.png){width="6in"}
+
+Before running the cell
+
+![](assets/img/image15.png){width="6in"}
+
+After running the cell
+:::
+
+# Numbered Lists
+
+-   To create a numbered list, enter $\texttt{1}$. followed by a space.
+    If you are lazy, you can even use $\texttt{1}$. before each entry
+    and the list will be numbered correctly when you run the cell.
+
+::: {.column width="45%"}
+![](assets/img/image18.png)
+:::
+
+::: {.column width="45%"}
+![](assets/img/image17.png)
+:::
+
+# Mathematical Symbols
+
+-   You can create mathematical expressions using LaTeX syntax by using
+    ( \$ ) symbol:
+
+::: {.column width="45%"}
+![](assets/img/image20.png)
+:::
+
+::: {.column width="45%"}
+![](assets/img/image19.png)
+:::
+
+# Additional Features
+
+-   Other available features include:
+    -   Inserting graphics
+    -   Using HTML code
+    -   Inserting web links
+    -   Inserting tables
+    -   ...and more
+
+# Git & Github
+
+-   Git is an open source version control language, developed in 2005.
+    -   GitHub is a cloud-based hosting service that lets you manage Git
+        repositories
+        -   Extremely widely used in the industry
+        -   Similar to Dropbox, OneDrive, but is more sophisticated for
+            collaborative work: *version control*
+
+# Git & Github
+
+-   The files are stored in a "repository", or "repo" that are simply
+    folders containing the files for a project.
+    -   Suppose you want to contribute to the TheGreatestApp repo.
+        -   You first "fork" the repo, which is a way to "clone" the
+            original repo files, which creates an identical repo under
+            your account's name.
+
+# Git & Github
+
+-   You work on your great idea to improve the app locally, and edit the
+    files in your clone repo.
+    -   Once you are done, you first "commit" your changes.
+        -   "Commit"ing basically is a manual way of overwriting files.
+    -   Then you push your changes to your clone repo such that the
+        files are modified and uploaded.
+
+# Git & Github
+
+-   Note that nothing has happened to the original repo so far.
+    -   You finally send a "pull request" to the owner of the original
+        repo.
+        -   A pull request automatically shows the account owner what
+            changes you have made in a nice intuitive side-by-side
+            window.
+        -   You can add a message at this stage and communicate.
+
+# Git & Github
+
+![](assets/img/image21.png){width="70%" height="70%"}
+
+# Git & Github
+
+-   After setting your own local repo via "fork"
+    -   commit
+    -   push
+    -   pull request
+
+# Git & Github
+
+![](assets/img/image22.png)
+
+# Git & Github
+
+![](assets/img/image23.png)
+
+# Git & Github
+
+-   You can use browser, GitHub Desktop App, or command line to interact
+    with your repo ![](assets/img/image23.png)
+
+# Git & Github
+
+-   Edits will be displayed on the interface, after which you can press
+    "commit to master", i.e. to your local repository.
+    ![](assets/img/image24.png)
+
+# Git & Github
+
+-   You are now ready to "push commits to the origin remote", this time
+    to your "cloud" repository. ![](assets/img/image25.png)
+
+# Git & Github
+
+-   To send your changes to the owner of the original repo, click on
+    "create pull request". ![](assets/img/image26.png)
+
+# Git & Github
+
+-   You can write a comment and explain your reasoning in updating the
+    code on this screen. ![](assets/img/image27.png)
+
+# Git & Github: command line
+
+-   After setting your own local repo via "fork" or "clone"
+    -   add files (only for command line) `>git add --all`
+    -   commit `>git commit --m "descriptive message"`
+        -   You can run `>git status` to check which files are changed
+    -   push `>git push`
+    -   pull request `>git pull`
+
+For more git commands: <br>
+<https://about.gitlab.com/images/press/git-cheat-sheet.pdf>
+
+# Github Classroom
+
+-   IMPORTANT!:warning: We will use Github Classroom to make things more
+    efficient and easier. (free service)
+    -   After setting your own local repo via "fork" or "clone"
+            
+# Github Classroom
+
+-   IMPORTANT!:warning: We will use Github Classroom to make things more
+    efficient and easier. (free service)
+    -   <s>After setting your own local repo via "fork" or "clone"</s>
+        -   You will receive an invitation email for each assignment.
+        -   Accepting the invitation automatically forks my repo and
+            creates your own local clone repo.
+        -   You can work on your assignment in your local repo, do any
+            edits.
+
+        
+# Github Classroom
+
+-   Once you have your local repo, you can use the Github Desktop app,
+    or any browser to upload your assignment via
+    -   commit
+    -   push
+    -   <s>pull request:</s> Also automated. Once you push your files to your
+        local repo, everything gets delivered automatically.
+
+#
+![](assets/img/image28.png)
+
+#
+![](assets/img/image29.jpeg)
