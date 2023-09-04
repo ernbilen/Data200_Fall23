@@ -1,0 +1,527 @@
+---
+title: "DATA 200: Data Systems for Data Analytics"
+from: markdown+emoji
+author: "Eren Bilen"
+institute: "Dickinson College"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+format:
+  revealjs:
+    theme: [default,custom.scss]
+    incremental: false
+    logo: "assets/dickinson_logo.jpg"
+    footer: "[github.com/ernbilen/Data200_Spring23](https://github.com/ernbilen/Data200_Spring23)"
+    fontsize: 2em
+    highlight-style: github
+    slide-number: c/t
+    history: false
+    chalkboard: 
+      boardmarker-width: 5
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Operating Systems
+
+-   Operating systems, such as Windows, MacOS, or Linux have similar
+    file system structures.
+
+-   Files can be anything; source programs, executable problems,
+    libraries, media, data...
+
+    -   One program can create a file and another program can read and
+        process the file.
+
+# Hierarchical Organization
+
+-   Operating systems utilize a hierarchical organization to organize
+    files.
+
+    -   A tree, with the root and interior nodes of the tree
+    -   Each folder can have contents, which are the children of the node in the
+        tree.
+    -   The children contents of a folder can have zero or more files
+        (and/or zero or more (sub)folders.)
+    -   A leaf is a node with no children.
+
+    
+
+# 
+
+![](assets/img/image4.png)
+
+-   Note: "..." represents a sub-tree not pictured.
+
+-   The "/" denotes the root of the file system
+
+**True/False?** A file must be a leaf on the tree.
+
+# 
+
+![](assets/img/image5.png){height="3.8in"}
+
+-   Here we focus on the user $\texttt{alice}$ and the subtree in the
+    file system that shows her home directory.
+
+# 
+
+![](assets/img/image6.png)
+
+-   Above is what we might see using a File Explorer on a Mac after
+    navigating to Alice's the $\texttt{Documents}$ folder.
+
+-   It's important to realize that the File Explorer is not the only
+    interface to the underlying file system structure.
+
+. . .
+
+::: {style="margin-left:50px; font-size:28x;"}
+-   For example, files and folders can also be accessed directly using
+    applications such as Terminal on MacOS or Command Prompt on Windows.
+:::
+
+. . .
+
+Demo time!
+
+
+# Paths
+
+-   A **path** starts at one node called the **source node**, and ends
+    at another node called the **destination node.**
+-   The destination node could be a file or a directory node.
+
+# File Paths
+
+-   A file path is a string that represents the location of a file. It's
+    broken up into three major parts:
+
+    -   **Folder Path:** the file folder location on the file system
+        where subsequent folders are separated by a forward slash /
+        (Unix or Mac) or backslash \\ (Windows).
+    -   **File Name:** the actual name of the file.
+    -   **Extension**: the end of the file path pre-pended with a period
+        (.) used to indicate the file type.
+
+# 
+
+![](assets/img/image7.png)
+
+# Path Separator Convention
+
+-   On the previous slide, we used the MacOS and Linux convention of
+    forward slash ( / ) as the path separator and / for the root.
+-   Windows uses $\texttt{<disk letter>:\ }$ for specifying a file
+    system tree root, and backslash ( \\ ) as the separator in paths.
+
+# Working Directory
+
+-   Whenever we execute our programs, the operating system maintains a
+    concept of a working directory .
+-   Often, the working directory is initialized as the folder in which
+    the file representing the program or executable resides.
+-   How is this related to Jupyter Notebook?
+
+# 
+
+![](assets/img/image8.png)
+
+Cool trick:
+
+-   Suppose the current working directory is: [/home/alice/Documents]{.yellow style="font-family: monospace;"}
+
+-   The path [./firstyear/ma135]{.blue style="font-family: monospace;"} defines the traversal:
+
+::: {.fragment fragment-index=2}
+[/home/alice/Documents]{.yellow style="font-family: monospace;"}[/firstyear/ma123]{.blue style="font-family: monospace;"}
+:::
+-   The path [../Pictures/profile.jpg]{style="font-family:monospace; color:purple;"} defines the traversal:
+
+::: {.fragment fragment-index=3}
+[/home/alice]{style="font-family:monospace; color:green;"}[/Pictures/profile.jpg]{style="font-family:monospace; color:purple;"} :wrench:Notice [Documents]{.yellow .monospace} is absent.
+:::
+
+# Opening a File in Python
+
+::: r-stack
+::: {.fragment fragment-index="1" style="padding-right: 340px;"}
+-   Before you can work with a file, you must open it.
+:::
+
+![](assets/img/yoda.jpg){.fragment .absolute fragment-index="2"
+bottom="370" right="77" width="4in" height="3in"}
+:::
+
+::: {.fragment fragment-index="3"}
+-   In Python we can use the built-in `open(.)` function. It takes, as
+    arguments, a string specifying a path to a file, and a second string
+    that specifies in what way the program will use the file, known as
+    its mode .
+
+-   The `open(.)` function creates and returns a file object, which can
+    be used to call other file support methods. <br> $\hspace{1cm}$
+    `file = open('hello.txt', 'r')` <br> <u>hello.txt</u> <br> Hello
+    World!
+:::
+
+# Access Modes
+
+![](assets/img/image9.png)
+
+# Access Modes
+
+-   In Python modes, we use `'t'` for text files, and `'b'` for binary
+    files. A mode can include both the form of access as well as the
+    file type, so a mode of `'rt'` would be used for read access to a
+    text file, or a mode of `'wb'` would be used for write access to a
+    binary file.
+
+    -   The default mode for `open(.)` is `'rt'` and can be omitted if
+        this is the desired mode. `open('hello.txt')`
+
+# OS Module in Python
+
+-   The OS module in Python provides functions for interacting with the
+    operating system. For example: `import os` <br> `os.getcwd()` Gets
+    the current working directory <br> `os.chdir('DataFolder')` Changes
+    the current working directory <br> `os.mkdir('C:\\MyProject')` Makes
+    a directory
+
+# File Path as a String
+
+-   Suppose we have a directory, referred to by the string `datadir`,
+    that contains the file `hello.txt`: `datadir = '/home/ alice'`
+-   We can use the `os.path.join(.)` method to concatenate various path
+    components with exactly one directory separator ( / ) <br>
+    `filepath = os.path.join(datadir,'hello.txt')`
+
+# os.path.join Example
+
+```{python eval=FALSE}
+import os 
+path = "/home" 
+print(os.path.join(path,"User/Desktop","file.txt")) 
+
+path = "User/Documents"
+print(os.path.join(path, "/home", "file.txt")) 
+```
+
+Output: <br> `/home/User/Desktop/file.txt` <br> `/home/file.txt`
+
+# Error Handling: Try Except
+
+-   Below we demonstrate a simple try-except block that can handle the
+    case where the file does not exist, or the user does not have
+    sufficient permissions for the specified access mode for the file
+    being opened. ![](assets/img/image10.png){width="5in"}
+
+# Closing a File
+
+-   When a program is finished with a file, you must call the `close(.)`
+    method to allow the operating systems to clean up and release
+    resources associated with the file connection: `file.close ()`
+
+    -   Closing files is essential and forgetting to close files can
+        have major negative consequences.
+    
+. . .
+
+- You need to pay me a penny for each time you forget closing a file.
+
+<iframe src="https://giphy.com/embed/HChtj3gzcVsXK" width="360" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/rich-the-simpsons-laughing-HChtj3gzcVsXK">via GIPHY</a></p>
+
+
+# File Position
+
+-   Once you've opened a file, you'll want to read or write to it .
+
+    -   The file position starts at line 0, which is the position at the very
+        beginning of the file. When we perform any of a set of read-type
+        operations, the operation reads in some number of characters and
+        the file position is advanced.
+
+# File Object Methods
+
+![](assets/img/image11.png)
+
+# Example
+
+![](assets/img/image12.png)
+
+-   The function `repr(.)` prints the representation of all the content
+    of a string, including showing a `\n` for the newline.
+
+# Another Example
+
+<u>twolines.txt</u> <br> <font face="monospace"> First line </font> <br>
+<font face="monospace"> A second line </font>
+
+```{python,eval=F}
+inputFile = open("twolines.txt") 
+filecontents = inputFile.read() 
+print(filecontents) 
+print(repr(filecontents)) 
+```
+
+**Output:** <br> <font face="monospace"> This is the first line.</font>
+<br> <font face="monospace"> This is the second line. </font> <br>
+<font face="monospace"> 'This is the first line.\\nThis is the second
+line.'</font>
+
+# `readline(.)` Method
+
+![](assets/img/image13.png)
+
+Output: 
+
+![](assets/img/image14.png)
+
+# `strip(.)` and `rstrip(.)`
+
+-   If we are processing a file by lines and want to remove whitespace
+    and newline characters, we can use
+
+    -   `strip(.)` to eliminate both leading and trailing whitespace in
+        a string
+    -   `rstrip(.)` to eliminate training whitespace in a string
+        ![](assets/img/image15.png)
+
+![](assets/img/image16.png)
+
+# Another `strip(.)` Example
+
+```{python,eval=F}
+txt = "    banana    " 
+x = txt.strip() 
+print("of all fruits", x, "is my favorite") 
+```
+
+<u>Output:</u> <br> of all fruits banana is my favorite
+
+# `split(.)` String Method
+
+-   The `split(.)` method breaks a string at the specified separator and
+    returns a list of strings.
+
+    -   The default separator is any whitespace.
+
+    ```{python,eval=F}
+    text = "Python is a fun programming language" 
+    print(text.split()) 
+    ```
+
+    <u>Output:</u> <br> <font face="monospace">\['Python', 'is', 'a',
+    'fun', 'programming', 'language'\] </font>
+
+# Another `split(.)` Example
+
+::: monospace
+grocery = 'Milk, Chicken, Bread'
+:::
+
+```{r tbl30, echo = FALSE}
+tbl30 <- tibble::tribble(
+~`Command`, ~`Output`,
+"print(grocery.split())","[ ]",
+"print(grocery.split(', '))","[ ]",
+"print(grocery.split(','))","[ ]",
+"print(grocery.split(':'))","[ ]"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl30), font_size = 18, html_font = 'monospace')
+```
+
+# File Processing with split(.)
+
+::: monospace
+<u>twolines.txt </u> <br> First line <br> A second line <br>
+:::
+
+![](assets/img/image18.png)
+
+![](assets/img/image17.png)
+
+# Methods for Ensuring a File is Closed
+
+-   A very common error in file processing is to fail to include the
+    `close(.)` for an open file.
+
+    -   There are two ways that you can use to ensure that a file is
+        properly closed, even when encountering an error: `try-finally`
+        block and a `with` statement.
+
+# try-finally block
+
+```{python, eval=F}
+reader = open('dog_breeds.txt') 
+try: 
+  # Further file processing goes here 
+finally: 
+  reader.close() 
+```
+
+-   If you're unfamiliar with the `try-finally` block, check out the
+    webpage [Python Exceptions: An
+    Introduction](https://realpython.com/python-exceptions/)
+
+# Using with Statement
+
+```{python, eval=F}
+with open('dog_breeds.txt') as reader: 
+  # Further file processing goes here 
+```
+
+-   The `with` statement automatically takes care of closing the file
+    once it leaves the `with` block, even in cases of error.
+-   Important::warning: It is highly recommended that you use the `with`
+    statement as much as possible, as it allows for cleaner code and
+    makes handling any unexpected errors easier for you.
+
+# with Continued
+
+-   Most likely, you'll also want to use the second positional argument,
+    `mode`.
+
+    -   This argument is a string that contains multiple characters to
+        represent how you want to open the file. The default is
+        read-only mode as a text file `'rt'`:
+
+    ```{python, eval=F}
+    with open('dog_breeds.txt', 'r') as reader: 
+      # Further file processing goes here
+    ```
+
+    <br>
+
+    ```{r tbl35, echo = FALSE}
+    tbl35 <- tibble::tribble(
+    ~`Character`, ~`Meaning`,
+    "'r'","Open for reading (default)",
+    "'w'","Open for writing, truncating (overwriting) the file first",
+    "'rb' or 'wb'","Open in binary mode (read/write using byte data)"
+    )
+
+    kableExtra::kable_styling(knitr::kable(tbl35), font_size = 18, html_font = 'monospace')
+    ```
+
+# readlines(.)Method
+
+-   The `readlines(.)` method reads, in a single invocation, a list
+    containing all the separate lines in a file.
+
+::: monospace
+<u>dog_breeds.txt</u> <br> Pug <br> Jack Russell Terrier <br> English
+Springer Spaniel <br> German Shepherd <br> Staffordshire Bull Terrier
+<br> Cavalier King Charles Spaniel <br> Golden Retriever <br> West
+Highland White Terrier <br> Boxer <br> Border Terrier <br>
+:::
+
+# readlines(.)Example
+
+```{python, eval=F}
+with open('dog_breeds.txt', 'r') as file_obj: 
+  lines = file_obj.readlines() 
+  
+for line in lines: 
+  print(line, end='') 
+```
+
+::: {.column width="45%"}
+::: monospace
+<u>dog_breeds.txt</u> <br> Pug <br> Jack Russell Terrier <br> English
+Springer Spaniel <br> German Shepherd <br> Staffordshire Bull Terrier
+<br> Cavalier King Charles Spaniel <br> Golden Retriever <br> West
+Highland White Terrier <br> Boxer <br> Border Terrier <br>
+:::
+:::
+
+::: {.column width="45%"}
+::: small
+Note that the `print(.)` function stops with a newline. By default, the
+value of this parameter is `\n`, but you can end a print statement with
+any character. Here, we are ending it with no characters (this prevents
+extra carriage returns in the output) Try playing around with this
+option and see what it gets returned to you.
+:::
+:::
+
+# Processing Files for Data
+
+-   We now consider iterating over a file in order to process data
+    contained therein as one or more lists.
+
+-   We begin with the assumption that our file has one datum per line,
+    and that the set of lines form a coherent collection.
+
+# Baby Names
+
+-   The file below contains the most popular female (baby) names, in
+    rank order, registered in 2010 with the US Social Security
+    Administration (SSA).
+
+::: monospace
+<u>Baby_2010_female_name.txt</u> <br> Isabella <br> Sophia <br> Emma
+<br> Olivia <br> Ava
+:::
+
+-   Our first objective is to create a function that processes the file
+    and returns a single Python list with a name per entry in the file.
+
+# `readNames(.)` Example
+
+![](assets/img/image19.png)
+
+# `readNames(.)` Example
+
+![](assets/img/image20.png)
+
+# Read in All Lines
+
+-   What if we wanted to process all the lines (names), rather than a
+    set number.
+
+    -   The pattern of processing a file by lines in an iterative
+        manners is a very common practice.
+    -   We can do this by allowing the file object itself to be an
+        iterator.
+
+# Iterating Example
+
+![](assets/img/image21.png)
+
+-   Note that the for-loop continues as long as there are lines, i.e.,
+    until it has reached the end-of-file.
+
+-   This method is typically quicker and more memory efficient.
+    Therefore, it is the suggested way to process a file.
+
+# Multiple Data Items per Line
+
+-   File often store data with each line representing a single case or
+    observation, and then within the line, there are multiple values of
+    some variables for the observation
+
+::: monospace
+<u>Baby_2010_female_name.txt</u> <br> Isabella 22913 <br> Sophia 20643
+<br> Emma 17345 <br> Olivia 17028 <br> Ava 15433 <br>
+:::
+
+-   Each line contains the name and then the number of babies registered
+    with that name.
+
+-   The name and the number are separated on each line with a single tab
+    (`\t`)
+
+# Example
+
+![](assets/img/image22.png)
+
+![](assets/img/image23.png){.absolute bottom="-120px" right="250px"}
+
+# Example Continued
+
+![](assets/img/image24.png)
