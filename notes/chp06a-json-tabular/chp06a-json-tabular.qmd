@@ -1,0 +1,294 @@
+---
+title: "DATA 200: Data Systems for Data Analytics"
+from: markdown+emoji
+author: "Eren Bilen"
+institute: "Dickinson College"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+format:
+  revealjs:
+    theme: [default,custom.scss]
+    incremental: false
+    logo: "assets/dickinson_logo.jpg"
+    footer: "[github.com/ernbilen/Data200_Fall23](https://github.com/ernbilen/Data200_Fall23)"
+    fontsize: 2em
+    highlight-style: github
+    slide-number: c/t
+    history: false
+    chalkboard: 
+      boardmarker-width: 5
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+#  Benefits of JSON 
+
+::: {.incremental}
++ Programmer familiarity: The notation/syntax is a close match for how programmers define data.
++ Readability: The format is text-based so the data is readable and editable directly in a text editor.
++ Lightweight but powerful: The notation is simple but can handle complex situations.
+:::
+
+#  JSON Data Structure Example 
+
+::: small
+::: monospace
+{ <br>
+$\hspace{1cm}$"firstName": "Jane", <br>
+$\hspace{1cm}$"lastName": "Doe", <br>
+$\hspace{1cm}$"hobbies": ["running", "sky diving", "singing"], <br>
+$\hspace{1cm}$"age": 35, <br>
+$\hspace{1cm}$"children": [ <br>
+$\hspace{2cm}${ <br>
+$\hspace{3cm}$"firstName": "Alice", <br>
+$\hspace{3cm}$"age": 6 <br>
+$\hspace{2cm}$}, <br>
+$\hspace{2cm}${ <br>
+$\hspace{3cm}$"firstName": "Bob", <br>
+$\hspace{3cm}$"age": 8 <br>
+$\hspace{2cm}$} <br>
+$\hspace{1cm}$] <br>
+} <br>
+:::
+:::
+
++ This looks almost identical to a Python ________! :blue_book:
+
+
+#  Python Supports JSON Natively 
+
++ Python comes with a built-in package called `json` for encoding and decoding JSON data. <br>
+ `import json`
++ Encoding means _writing_ data to disk; decoding means _reading_ data into memory.
+
+
+#  Serializing JSON 
+
++ Python objects to JSON translation:
+
+```{r tbl4, echo = FALSE}
+tbl4 <- tibble::tribble(
+~`Python`, ~`JSON`,
+"dict","object",
+"list, tuple","array",
+"str","string",
+"int, long, float","number",
+"True","true",
+"False","false",
+"None","null"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl4), font_size = 18)
+```
+
+
+#  Serialization Example
+::: r-stack
+::: monospace
+import json <br>
+data = { <br>
+$\hspace{1cm}$"president": { <br>
+$\hspace{2cm}$"name": "Zaphod Beeblebrox", <br>
+$\hspace{2cm}$"species": "Betelgeusian" <br>
+$\hspace{1cm}$} <br>
+} <br>
+with open(" data_file.json ", "w") as write_file: <br>
+$\hspace{1cm}$json.dump (data, write_file ) <br>
+![](assets/img/hitchiker.png){.fragment fragment-index=2 .absolute bottom="-30" right="20" width="400"}
+
+::: {.fragment fragment-index=3 .absolute bottom="10" right="200"}
+<iframe src="https://giphy.com/embed/hgttC8kbDWYQU" width="480" height="271" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+:::
+:::
+:::
+
+#  Deserializing JSON 
+::: monospace
+with open("data_file.json", "r") as read_file: <br>
+$\hspace{1cm}$ data = json.load(read_file)
+:::
++ The result of the `load(.)` call is able to return any of the allowed data types from the conversion table.
+	+ We will explore JSON more later in the course.
+	+ Let's now talk about Tabular Model.
+
+
+#  Tabular Model: Structure and Formats 
+
+Def: A data model 
+
+- the _structure_ of the data,
+- the _operations_ to obtain and update data within the model,
+- _constraints_ that, within the model, limit the data in various ways.
+
+. . .
+
+::: r-stack
+- **Tabular data** is data that is structured into rows and columns. Each row contains information from a person, object etc.
+	- In tabular data, cells within the same column provide information on the <u> same characteristic </u> of the things described by each row.
+![](assets/img/data180.png){.fragment .absolute bottom="50" right="50"}
+:::
+
+
+#  Tidy Data 
+
+Def: A data set in the tabular data model is said to be **tidy data** if it
+conforms to the following.
+
++ Each column represents exactly one variable of the data set. **(TidyData 1)**
++ Each row represents exactly one unique mapping (observation) **(TidyData2)**
++ Each value must have its own cell. **(TidyData3)**
+
+. . .
+
+Check out <https://r4ds.had.co.nz/tidy-data.html> by Hadley Wickham
+
+
+#  Top Baby Names 
+::: {.column width="45%"}
+![](assets/img/image3.png)
+:::
+::: {.column width="45%"}
++ There are alternate ways that this data set could be represented in a tabular format.
+:::
+
+
+#  Tidy Data? 
+::: {.column width="45%"}
+![](assets/img/image4.png)
+:::
+
+::: {.column width="45%" .incremental}
++ We can see columns headed up by year values, so that we are violating **TidyData1**--the columns here are not variables.
+:::
+
+#  Tidy Data? 
+
+![](assets/img/image5.png)
+
+::: incremental
++ Note that the columns like `FemaleName` do not represent exactly one variable.
+
++ The name of the column itself shows two parts, one of which is a value of a categorical variable, and the other part is a variable that is then repeated in `MaleName`.
+
++ This is a violation of **TidyData1**.
+:::
+
+
+#  Tidy Data? 
+![](assets/img/image6.png)
+
++ Only the original table, Table 6.1, satisfies all three requirements of tidy data.
+
+
+
+#  Format 
+
+Def: A format (file format or document format) is a specification of the information encoding into a sequence of characters or bytes in a file to be communicated between a creator/writer/provider and a corresponding consumer/reader/client.
+Examples: `jpg, mp3, docx, mov`
+
++ The most common format for **tabular data** is **the comma-separated value (CSV)** format.
+
+
+#  CSV Format
+::: incremental
++ CSV strikes a nice balance between being readable by humans and readable by computers.
++ CSV is a tabular format consisting of rows of data, each row containing multiple cells. Rows are separated by line terminators, so each row corresponds to one line.
++ The CSV format assumes exactly one tabular structure per separate file.
+    + This is more constrained than a spreadsheet model, in which a single file can contain multiple worksheets that could each hold its own tabular structure.
++ CSV is a text-based format, i.e., a CSV file is a text file.
+:::
+
+#  Typical Structure of CSV 
++ One header row, which gives the names of the columns.
++ May rows of data.
+  + One row of data is encoded in one line of the file.
+  + Values are separated by commas.
++ Sometimes a \# is used for comment lines. (although rarely)
+
+#  CSV Example 
+
++ Header row: <br>
+
+::: monospace
+ LastName , FirstName, Initial, Course, Time
+:::
+
++ Data (subsequent rows): <br>
+
+::: monospace
+ Lauer, Hugh, C, CS-1004, 0800 <br>
+ Wills, Craig, E, CS-3013, 1200 <br>
+ Hamel, Glynis, M, CS-1101, 1000 <br>
+:::
+
+#  Tabular Data in Python 
+
++ We could represent tabular data in Python with native built-in data structures using a _dictionary of lists (DoL)_  or a _lists of lists (LoL)_.
++ As we will see, these approaches have distinct disadvantages.
+
+
+#  Dictionary of Lists (DoL) 
+
++ We could represent tabular data in Python using a dictionary of lists (DoL):
+
+::: {.column width=45%}
+![](assets/img/image7.png)
+:::
+::: {.column width=45%}
++ This is effective for accessing and manipulating entire columns but working with rows requires additional code.
+:::
+![](assets/img/image8.png)
+
+
+#  Dictionary of Lists (DoL) 
+
+![](assets/img/image8.png)
+
+![](assets/img/image9.png)
+
+
+#  List of Lists (LoL) 
+
++ We could also represent tabular data in Python using a list of lists (LoL):
+
+::: {.column width=45%}
+![](assets/img/image7.png)
+:::
+::: {.column width=45%}
++ While effective for dealing by rows, there is more work for manipulating columns.
+:::
+
+![](assets/img/image10.png)
+
+
+
+#  List of Lists (LoL) 
+
+![](assets/img/image10.png)
+
+![](assets/img/image11.png)
+
+
+
+#  List of Lists (LoL) 
+
+![](assets/img/image10.png)
+
+![](assets/img/image12.png)
+
+
+#  Pandas 
+::: r-stack
++ Pandas Dataframe is the solution!!
++ The need for Python data structures to handle tabular data has led to the development of the pandas module.
++ Let's begin learning Pandas!
+![](assets/img/pandas.jpeg){.fragment .absolute bottom="-50" right="80" width="400"}
+![](assets/img/pandas-morpheus.jpg){.fragment .absolute bottom="-80" right="400" width="400"}
+![](assets/img/python-logo.jpg){.fragment .absolute bottom="30" right="350" width="300" height="800"}
+:::
+
+# Let's go!
