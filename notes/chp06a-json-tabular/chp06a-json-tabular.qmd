@@ -182,6 +182,7 @@ Check out <https://r4ds.had.co.nz/tidy-data.html> by Hadley Wickham
 ![](assets/img/image6.png)
 
 + Only the original table, Table 6.1, satisfies all three requirements of tidy data.
++ Later in the semester, we will learn pivoting and melting, which are tools to make data untidy data tidy.
 
 
 
