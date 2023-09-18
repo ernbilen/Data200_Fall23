@@ -242,13 +242,8 @@ Examples: `jpg, mp3, docx, mov`
 ::: {.column width=45%}
 + This is effective for accessing and manipulating entire columns but working with rows requires additional code.
 :::
+![](assets/img/image8.png)
 
-::: monospace
-topnames = {'year': [2018,2018,2017,2017,2016,2016], <br>
-$\hspace{3cm}$	    'sex': ['Male','Female','Male','Female','Male','Female'], <br>
-$\hspace{3cm}$	    'name': ['Liam','Emma','Liam','Emma','Noah','Emma'], <br>
-$\hspace{3cm}$	    'count': [19837,18688,18798,19800,19117,19496]}
-:::
 
 #  Dictionary of Lists (DoL) 
 
