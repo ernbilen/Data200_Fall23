@@ -97,7 +97,7 @@ $\hspace{2cm}$"species": "Betelgeusian" <br>
 $\hspace{1cm}$} <br>
 } <br>
 with open("data_file.json", "w") as write_file: <br>
-$\hspace{1cm}$json.dump (data, write_file ) <br>
+$\hspace{1cm}$json.dump(data, write_file) <br>
 ![](assets/img/hitchiker.png){.fragment fragment-index=2 .absolute bottom="-30" right="20" width="400"}
 
 ::: {.fragment fragment-index=3 .absolute bottom="10" right="200"}
