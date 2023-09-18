@@ -1,0 +1,6 @@
+dataDoL={'name':['Bella','Charlie','Lucy','Coooper','Max','Stella','Bernie'], 
+         'breed':['Labrador','Poodle','ChowChow','Schnauzer','Labrador','Chihuahua','St.Bernard'],
+         'color': ['Brown','Black','Brown','Gray','Black','Tan','White'], 
+         'height_cm':[56,43,46,49,59,18,77], 'weight_kg':[24,24,24,17,29,2,74], 
+         'date_of_birth':['2013-07-01','2016-09-16','2014-08-25','2011-12-11','2017-01-28',\
+                          '2015-04-20', '2018-02-27']}
