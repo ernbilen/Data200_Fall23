@@ -157,7 +157,7 @@ Check out <https://r4ds.had.co.nz/tidy-data.html> by Hadley Wickham
 
 
 #  Tidy Data? 
-::: {.column width="45%"}
+::: {.column width="85%"}
 ![](assets/img/image4.png)
 :::
 
@@ -188,7 +188,7 @@ Check out <https://r4ds.had.co.nz/tidy-data.html> by Hadley Wickham
 
 #  Format 
 
-Def: A format (file format or document format) is a specification of the information encoding into a sequence of characters or bytes in a file to be communicated between a creator/writer/provider and a corresponding consumer/reader/client.
+Files stored in a computer can come in different formats.
 Examples: `jpg, mp3, docx, mov`
 
 + The most common format for **tabular data** is **the comma-separated value (CSV)** format.
