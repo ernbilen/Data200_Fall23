@@ -118,7 +118,7 @@ $\hspace{1cm}$ data = json.load(read_file)
 
 #  Tabular Model: Structure and Formats 
 
-Def: A data model 
+A data model has the following defining characteristics
 
 - the _structure_ of the data,
 - the _operations_ to obtain and update data within the model,
