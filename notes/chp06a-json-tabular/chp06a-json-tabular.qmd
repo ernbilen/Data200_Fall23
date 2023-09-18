@@ -215,7 +215,7 @@ Examples: `jpg, mp3, docx, mov`
 + Header row: <br>
 
 ::: monospace
- LastName , FirstName, Initial, Course, Time
+ LastName, FirstName, Initial, Course, Time
 :::
 
 + Data (subsequent rows): <br>
