@@ -191,19 +191,10 @@ Check out <https://r4ds.had.co.nz/tidy-data.html> by Hadley Wickham
 Files stored in a computer can come in different formats.
 Examples: `jpg, mp3, docx, mov`
 
-+ The most common format for **tabular data** is **the comma-separated value (CSV)** format.
++ The most common format for tabular data is **the comma-separated value (CSV)** format.
 
 
 #  CSV Format
-::: incremental
-+ CSV strikes a nice balance between being readable by humans and readable by computers.
-+ CSV is a tabular format consisting of rows of data, each row containing multiple cells. Rows are separated by line terminators, so each row corresponds to one line.
-+ The CSV format assumes exactly one tabular structure per separate file.
-    + This is more constrained than a spreadsheet model, in which a single file can contain multiple worksheets that could each hold its own tabular structure.
-+ CSV is a text-based format, i.e., a CSV file is a text file.
-:::
-
-#  Typical Structure of CSV 
 + One header row, which gives the names of the columns.
 + May rows of data.
   + One row of data is encoded in one line of the file.
