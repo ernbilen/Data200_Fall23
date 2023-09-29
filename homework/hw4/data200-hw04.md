@@ -4,7 +4,7 @@
 # Homework 4: Pandas Operations
 
 
-<font color='red'>**Due Date and Time:** Beginning of class on Thursday, Oct 6 </font>
+<font color='red'>**Due Date and Time:** Beginning of class on Thursday, Oct 5 </font>
 ---
 Please enter your name in the markdown cell below.
 
