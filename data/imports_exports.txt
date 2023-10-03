@@ -1,0 +1,5 @@
+imports_exportsDoL = {
+'country': ['India','China','United States'],
+'imports': [2241.66, 392.23, 1601.76],
+'exports': [1504.57, 266.16, 2280.54]}
+imports_exports = pd.DataFrame(imports_exportsDoL)
