@@ -1,0 +1,6 @@
+data2 = {'country': ['Germany','United Kingdom'],
+	'pop': [82.66, 66.06], 
+	'gdp': [3693.20, 2637.87],
+	'life': [81.16, 81.16], 
+	'cell': [80.75, 92.23]}
+ind2 = pd.DataFrame(data2)
