@@ -1,0 +1,64 @@
+Data 200 **Study guide for Exam 1:**
+This list is created to help you study for exam 1. 
+*Important:* The topics listed here may not be fully comprehensive. You should refer to
+the course pack and the notes posted on GitHub, as they form the main source material.
+
+Topic 1: Data Systems
+What are data systems?
+Who is data system client, resource owners, data system provider?
+Where can data be stored?
+What is an API? Why is it used?
+What are most widely used data forms?
+What are the three main characteristics describing a data model? Explain each and
+identify for a given data model.
+What are three main data models?
+What is the goal in constructing a data system?
+
+Topic 2: Numpy
+What is numpy? Why is it used?
+What is vectorization? Why is it used?
+How is numpy loaded and called?
+Create a numpy array object (1,2,or 3d) with given data.  
+Access individual element(s) in a numpy object.
+Reshape an array.
+Return the shape of an array.
+Make operations on a numpy array using vectorization.
+Calculate basic statistics on data stored as numpy array.
+Check if a numpy array contains missing values. Be able to handle them.
+What is broadcasting? Why is it used?
+Identify if a an operation is possible between two elements using broadcasting.
+
+Topic 3: Files and Data
+Identify file type from a given file extension.
+Find a path to a file/folder given a file structure. 
+Read a text file in python.
+Read text files using with open() as.
+Compare read() readline() readlines(). Be able to use either of them to read a text file.
+Use strip(), split() when necessary.
+Compare csv and json files.
+Write and read a json file.
+What is tidy data? What are its assumptions? 
+Identify if a spreadsheet is tidy data or not. Identify what assumption is violated given untidy data.
+
+Topic 4: Pandas
+Create a pandas series from given data.
+Create a pandas dataframe from a dictionary of lists.
+Read and write a csv file using pandas.
+Access individual element(s) in a pandas object.
+Make operations on a pandas object.
+Subset a dataframe using isin().
+Return number of rows and columns of a pandas dataframe.
+Identify the level (units) of data given a dataframe.
+Return the unique values and their counts of a categorical column in a pandas dataframe.
+Aggregate a dataframe using agg()
+Aggregate a dataframe on a given level using groupby()
+Sort values in a dataframe.
+Add and delete columns/rows in a dataframe.
+Append two dataframes with same columns, different rows.
+Merge two dataframes based on index, or using a common key variable.
+Perform a left, right, and inner join. Explain when to use one over the other.
+Handle missing data in a pandas dataframe.
+What are wide-form and long-form of data?
+What is melt? What is pivot?
+Reshape data into tidy form using melt or pivot when necessary.
+

@@ -1,0 +1,9 @@
+data = {
+    'Student_ID': [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+    'Name': ['John', 'Jane', 'Bob', 'Alice', 'Eve', 'John', 'Jane', 'Bob', 'Alice', 'Eve', 'John', 'Jane', 'Bob', 'Alice', 'Eve'],
+    'Subject': ['Math', 'Math', 'Math', 'Math', 'Math', 'Science', 'Science', 'Science', 'Science', 'Science', 'English', 'English', 'English', 'English', 'English'],
+    'Score': [85, 92, 78, 88, 90, 90, 88, 75, 82, 95, 75, 80, 92, 88, 70]
+}
+
+students = pd.DataFrame(data)
+students

@@ -1,0 +1,11 @@
+# Creating a sample wide DataFrame
+data = {
+    'Country': ['USA', 'Canada', 'Mexico'],
+    '2000': [100, 200, 300],
+    '2005': [150, 250, 350],
+    '2010': [200, 300, 400],
+    '2015': [250, 350, 450]
+}
+
+countries = pd.DataFrame(data)
+countries
