@@ -1,0 +1,52 @@
+Data 200 **Study guide for Exam 2:**
+This list is created to help you study for the exam. 
+*Disclaimer:* The topics listed here are fully comprehensive of the material
+Covered in class. You should refer to the course pack and the notes posted on GitHub, 
+as they form the main source material. Keep in mind the course pack may include more information
+than what is covered in class. (You are responsible from what is covered in class)
+
+
+Topic 5: Relational databases
+Define a relational database management system. How is it different than the tabular model
+in terms of structure, constraints, and operations?
+What is a primary key? What is a foreign key?
+What are the columns called in a relational database table? What are the rows called?
+What is functional dependency? Show functional dependency in a given relational database.
+Understand the three types of relationships: one-to-one, one-to-many, and many-to-many.
+What is a linking table?
+
+Topic 6: SQL
+What does sql stand for? What is its purpose?
+Similarities between SQL and Pandas? In what situation is SQL more beneficial than Pandas?
+Be comfortable with SQL syntax and common SQL statements, keywords, clauses, functions:
+SELECT statement
+ORDER BY and DISTINCT keywords
+WHERE clauses with the IS, OR, and AND operators
+MAX, MIN and COUNT functions
+LIKE operator and wildcards
+BETWEEN and IN operators
+GROUP BY and HAVING statements
+Table and column aliasing using AS
+COUNT() function, e.g., difference between COUNT(*) and COUNT(field)
+Comments (/*…*/ and --)
+SQL order of operations
+How are missing values handled?
+Calculated fields
+String concatenation (|| are used in SQLite)
+How are subqueries used?
+Difference between WHERE and HAVING
+SUBSTRING() function
+
+Topic 7: Joins
+Overview of differences between inner join, left join, right join, and full outer join
+SQL commands to perform the difference types of joins:
+INNER JOIN
+LEFT JOIN
+RIGHT JOIN
+OUTER JOIN
+Difference between ON and USING
+There is no real need for both a left and right join (why?)
+How to emulate an outer join using UNION (many DBMS don’t have an outer join)
+Using a subquery combined with IN
+Given a relational database, write a query with join statements that returns a desired table.
+
