@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 15</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Eren Bilen" />
+    <script src="libs/header-attrs-2.21/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Chapter 15
+]
+.subtitle[
+## Hierarchical Model: Structure and Formats
+]
+.author[
+### Eren Bilen
+]
+.date[
+### Data 200: Data Systems
+]
+
+---
+
+
+#  Web-Scraping? 
+
++ In the final portion of our course, we will learn how to do "web-scraping"
+ + Web-scraping is the process of obtaining data from websites using in an automated way
+ + "Bot"?
+&lt;img src="assets/img/bot.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+---
+
+#  Web-Scraping? 
+&lt;img src="assets/img/bot2.jpg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+#  Hierarchical Data: Recap
++ Websites use hierarchical data structures.
++ Recap: A hierarchical database is a data model in which data is stored in the form of records and organized into a tree-like structure. 
++ Keep in mind: one parent node can have many child nodes connected through links.
+![](assets/img/image3.png)
+
+---
+#  Why? 
++ Logistics: Hierarchical database models are simpler, and are more suitable for OS or websites.
+	+ The one-to-many organization of data makes traversing the database simple and fast, which is ideal for use cases such as website drop-down menus or folder structures of an operating system.
+	+ Information can easily be added or deleted without affecting the entirety of the database.
++ Data obtained from web scraping and from APIs are naturally hierarchical.
++ We will cover the most widely used formats: JSON, XML, and HTML then learn about how to scrape using the Selenium library.
+
+---
+#  Examples
+
++ Virtually all websites must store their data in some way, in many different industries, often describe live day-to-day data transactions:
+	+ Stocks and Shares
+	+ Financial transactions
+	+ Medical data
+	+ Mathematical data
+	+ Scientific measurements
+	+ News information
+	+ Weather services
+	
+---
+#  JSON
++ We have already seen JSON earlier in the semester.
++ JSON is a very convenient format for hierarchical data.
++ Integrates well with JavaScript.
+
+
+```python
+{ 
+    "Employee": 
+    {
+        "Name": "John Smith",
+        "Salary": "$5"
+    }
+}
+```
+
+---
+#  XML 
+
++ The eXtensible Markup Language (XML) is another hierarchical data format.
++ It was developed before JSON, peaked ~early 2000s
++ Slightly larger file sizes, but otherwise syntax is the only main difference.
+	
+
+```xml
+&lt;Employee&gt;
+    &lt;Name&gt;John Smith&lt;/Name&gt;
+    &lt;Salary&gt;$5&lt;/Salary&gt;
+&lt;/Employee&gt;
+```
+
+
+---
+#  Introduction to XPath 
+
++ XPath is a language that facilitates path-based operations in XML documents. 
+  + locating, 
+  + retrieving, 
+  + updating data
++ The name “XPath” comes from “XML Path Language.”
+
+---
+#  `ind2.xml`
+
+```xml
+&lt;ind2&gt;
+&lt;FRA&gt;
+&lt;y2007&gt;
+&lt;pop&gt;64.02&lt;/pop&gt;
+&lt;gdp&gt;2657.21&lt;/gdp&gt;
+&lt;/y2007&gt;
+&lt;y2017&gt;
+&lt;pop&gt;66.87&lt;/pop&gt;
+&lt;gdp&gt;2586.29&lt;/gdp&gt;
+&lt;/y2017&gt;
+&lt;/FRA&gt;
+&lt;GBR&gt;
+&lt;y2007&gt;
+&lt;pop&gt;61.32&lt;/pop&gt;
+&lt;gdp&gt;3084.12&lt;/gdp&gt;
+&lt;/y2007&gt;
+&lt;y2017&gt;
+&lt;pop&gt;66.06&lt;/pop&gt;
+&lt;gdp&gt;2637.87&lt;/gdp&gt;
+&lt;/y2017&gt;
+&lt;/GBR&gt;
+&lt;/ind2&gt;
+```
+---
+#  Example XPath String 
+
+**Path:**  `/ind2/FRA/y2017`
+
+**Return:**
+
+```xml
+Element='&lt;y2017&gt;
+&lt;pop&gt;66.87&lt;/pop&gt;
+&lt;gdp&gt;2586.29&lt;/gdp&gt;
+&lt;/y2017&gt;'
+```
+
+---
+#  Example XPath String 
+
+**Path:**  `/ind2/FRA/y2017/pop` &lt;br&gt;
+**Return:** 
+
+```xml
+Element='&lt;pop&gt;66.87&lt;/pop&gt;’
+```
+**Path:**  `/ind2/FRA/y2017/pop/text()` &lt;br&gt;
+**Return:** 
+
+```xml
+Text='66.87'
+```
++ `text()` extracts the text of the current node
+
+---
+#  Typical Goal 
+
++ The goal of XPath is often like `findall()` to get a "nodeset"
+  + **Nodeset:** A set of nodes that satisfy a given path pattern.
+  
++ In Python, once we have an XPath expression, we can give it as a parameter to the `xpath()` function of an `ElementTree` or an `Element` object, which returns the nodeset and the data we need.
+
+---
+#  Path Pattern Example 
+
+**Path:**  `/ind2/FRA/*/pop` &lt;br&gt;
+**Return:** 
+
+```xml
+Element='&lt;pop&gt;64.02&lt;/pop&gt;’
+Element='&lt;pop&gt;66.87&lt;/pop&gt;’
+```
++ **Note:** A wildcard matches any node at the given level, but not a path worth of nodes. The example above would not match nodes where 'pop' is a greatgrandchild of 'FRA'. (`*` can take only one node)
+There are two elements in the returned nodeset .
+
+---
+#  `indicators.xml`
+
+```xml
+&lt;indicators&gt;
+&lt;country code="USA" name="United States"&gt;
+&lt;timedata year="1960"&gt;
+&lt;pop&gt;180.67&lt;/pop&gt;
+&lt;gdp &gt;543.3&lt;/gdp&gt;
+&lt;life&gt;69.8&lt;/life&gt;
+&lt;cell&gt;0.0&lt;/cell&gt;
+&lt;imports&gt;16170.7&lt;/imports&gt;
+&lt;exports&gt;20535.0&lt;/exports&gt;
+&lt;/timedata&gt;
+&lt;timedata year="1961"&gt;
+&lt;pop&gt;183.69&lt;/pop&gt;
+&lt;gdp &gt;563.3&lt;/gdp&gt;
+&lt;life&gt;70.3&lt;/life&gt;
+...
+```
+
+---
+#  Expressions 
+
++ The following two paths are equivalent, but the second one uses `[@code = 'FRA']` to specify a country
+
+**Path:**  `/ind2/FRA/y2007/pop` &lt;br&gt;
+**Path:** `/indicators/country[@code='FRA']/timedata[@year='2007']/pop` &lt;br&gt;
+**Return:** 
+
+```xml
+Element='&lt;pop&gt;64.02&lt;/pop&gt;'
+```
+
+---
+#  Logical Or 
+
++ If we wanted the population of France and the USA for all years, we can use a logical `or`:
+
+**Path:**  `/indicators/country[@code ='FRA' or @code ='USA']/*/pop` &lt;br&gt;
+**Return:**
+
+```xml
+Element= '&lt;pop&gt;46.62&lt;/pop&gt;’
+Element= '&lt;pop&gt;47.24&lt;/pop&gt;’
+Element= '&lt;pop&gt;47.9&lt;/pop&gt;’
+Element= '&lt;pop&gt;48.58&lt;/pop&gt;’
+...
+```
+
+---
+#  `school.xml`
+
+```xml
+&lt;school&gt;
+&lt;departments&gt;
+&lt;department id="ANSO"&gt;
+&lt;name&gt;Anthropology and Sociology&lt;/name&gt;
+&lt;division&gt;Social Sciences&lt;/division&gt;
+&lt;/department&gt;
+...
+&lt;/departments&gt;
+&lt;courses&gt;
+&lt;course subject="ARAB" num="111"&gt;
+&lt;title&gt;Beginning Arabic I&lt;/title&gt;
+&lt;hours&gt;4.0&lt;/hours&gt;
+&lt;class id="40184"&gt;
+&lt;term&gt;FALL&lt;/term&gt;
+&lt;section&gt;01&lt;/section&gt;
+&lt;meeting&gt;09:30-10:20 MWRF&lt;/meeting&gt;
+&lt;instructorid &gt;9216&lt;/instructorid&gt;
+&lt;/class&gt;
+&lt;/course&gt;
+...
+&lt;/courses&gt;
+&lt;/school&gt;
+```
+---
+#  Logical And 
+
++ We can use a logical `and` to find the title `“Elementary Cinema Prod”` using course number `219` in the `school.xml` file as follows:
+
+**Path:**  `/school/courses/course[@subject='CINE' and @num='219']/title` &lt;br&gt;
+**Return:** 
+
+```xml
+Element= '&lt;title&gt;Elementary Cinema Prod&lt;/title&gt;'
+```
+---
+#  Match All Descendants 
++ The expression `//` is often a useful start of an XPath.
++ We could use this to find all nodes with a specified text. For example, in indicators, we can match all nodes with population larger than 300 million:
+
+**Path:** `//pop[text()&gt;300]`
+
+---
+#  Backing Up a Level 
+
++ Suppose we wanted to find what department offers the course with the title `"Elementary Cinema Prod"` in the `school.xml` data.
++ We can locate that course then back up one level and extract the subject attribute:
+
+**Path:** `//title[text() = "Elementary Cinema Prod"]/../@subject` &lt;br&gt;
+**Return:** 
+
+```xml
+Attribute='subject=CINE'
+```
+---
+#  `breakfast.xml`
+
+```xml
+&lt;menu&gt;
+&lt;food price="5.95" calories="650"&gt;
+&lt;name&gt;Belgian Waffles&lt;/name&gt;
+&lt;description&gt;Two of our famous Belgian Waffles with maple syrup&lt;/description&gt;
+&lt;/food&gt;
+&lt;food price="7.95" calories="900"&gt;
+&lt;name&gt;Strawberry Belgian Waffles&lt;/name&gt;
+&lt;description&gt;Light Belgian waffles covered with strawberries&lt;/description&gt;
+&lt;/food&gt;
+&lt;food price="8.95" calories="900"&gt;
+&lt;name&gt;Berry-Berry Belgian Waffles&lt;/name&gt;
+&lt;description&gt;Light Belgian waffles covered with fresh berries&lt;/description&gt;
+&lt;/food&gt;
+&lt;food price="4.5" calories="600"&gt;
+&lt;name&gt;French Toast&lt;/name&gt;
+&lt;description&gt;Thick slices made from our homemade sourdough bread&lt;/description&gt;
+&lt;/food&gt;
+&lt;food price="6.95" calories="950"&gt;
+&lt;name&gt;Homestyle Breakfast&lt;/name&gt;
+&lt;description&gt;Two eggs, bacon, toast, and hash browns&lt;/description&gt;
+&lt;/food&gt;
+&lt;/menu&gt;
+```
+---
+#  Another Example 
+
++ The following (equivalent) paths extract all food prices in the `breakfast.xml` data set.
+
+**Input:** `//@price` &lt;br&gt;
+**Input:** `/menu/food/@price`
+
+```xml
+Attribute='price=5.95’
+Attribute='price=7.95’
+Attribute='price=8.95’
+Attribute='price=4.5’
+Attribute='price=6.95'
+```
+* Caveat: Using `\\` can be very slow!
+
+---
+#  Searching Text Nodes 
+
++ XPath can also help us "search" text nodes, similar to SQL's `LIKE` operator
++ For example, in the `topnames.xml` data, the expression
+
+**Input:** `//name[contains(text(),’Jo’)]/text()`
+
+matches all name nodes where the text contains 'Jo'. This	includes 'John’ and would also contain 'Joanna' or 'MoJo’ if those were ever top names.
+
+---
+#  Searching Text Nodes Continued 
+
++ A related function, `starts-with()`, determines whether the text starts with a given string.
++ For example,
+
+**Input:** `//name[starts-with(text(),’Jo’)]/text()`
+
+matches 'John' but would not match 'MoJo'.
+
+---
+#  Python Programming with XPath 
+
++ Let's now look at how to use XPath expressions in Python.
++ We will first use the `etree` library to parse the XML file using the function `getLocalXML` defined in the next slide.
+
+---
+#  `getLocalXML() `
+
+```python
+def getLocalXML (filename, datadir ="."):
+  # Set the data directory
+  xmlPath = os.path.join( datadir, filename)
+  try:
+    tree = etree.parse (xmlPath)
+    root = tree.getroot ()
+    return root
+  except:
+    print("Error in parsing XML")
+    return None
+```
+---
+#  Obtain Root of breakfast.xml 
+```
+breakfastRoot =
+ getLocalXML ("breakfast.xml", datadir)
+```
+---
+#  Python Example 1 
+
+Note that `xpath()` takes as input an XPath expression as a Python string and returns a list of nodes that match.
+![](assets/img/image11.png)
+
+---
+#  Python Example 2 
+
++ Below we find the cost of French Toast:
+
+![](assets/img/image12.png)
+
+**Keep in mind:** `xpath()` always returns a list!
+
+---
+#  Python Example 3 
+
++ Below we use functional abstraction to find the cost of a provided food.
+
+![](assets/img/image13.png)
+
+---
+#  HTML Basics 
+
++ HTML stands for HyperText Markup Language.
++ Every website you think of is written in HTML.
++ It’s not a programming language like Python or Java: it’s a markup language. It displays information on a user's browser.
+ + You can't program "Snake" in HTML. 🙁
++ It describes the elements of a page through tags characterized by angle brackets.
+
+---
+#  Simple HTML Example 
+
+.pull-left[![](assets/img/image14.png)]
+
+.pull-right[![](assets/img/image15.png)] &lt;br&gt;
+
++ The document always begins and ends with `&lt;html&gt;` and `&lt;/html&gt;`.
++ `&lt;body&gt;&lt;/body&gt;` constitutes the visible part of HTML document. 
++ `&lt;h1&gt;` to `&lt;h3&gt;` tags are defined for the headings.
+
+---
+#  Simple HTML Example
+&lt;br&gt; 
+.pull-left[![](assets/img/image16.png)]
+
+.pull-right[![](assets/img/image17.png)]
+
+---
+#  Simple HTML Example
+
+&lt;br&gt; 
+
+.pull-left[![](assets/img/image18.png)]
+
+.pull-right[![](assets/img/image19.png)]
+
+---
+
+.pull-left[![](assets/img/image20.png)]
+
+.pull-right[![](assets/img/image21.png)]
+
+---
+
+![](assets/img/image22.png)
+
+---
+#  Classes and ID 
+
++ The `id` is an attribute to specify a unique ID for an element. For example, say, you want a particular color and size for the title in the first header.
++ The `class` attribute defines different elements within the same class. You would probably want to write some phrases with the same font, color, and size.
++ Both IDs and classes are defined in the `&lt;style&gt;` tags and the properties are defined in curly braces `{}`
++ The syntax for the class definition needs period, `.` followed by the name of the class. The ID needs a hashtag, `#` followed by the name of the ID.
++ Once you create the class and the ID in the `&lt;style&gt;` tags, you can pass them in the elements you want.
+
+
+
+---
+#  Tables 
+
++ Another important feature of HTML is the table, which is defined by the `&lt;table&gt;` tag.
++ Within the `&lt;table&gt;` tag, there are three principal tags to remember:
+	+ The `&lt;tr&gt;` tag is used to build each row of the table.
+	+ The `&lt;th&gt;` tag is used to define the header.
+	+ The `&lt;td&gt;` tag is used to define the cell within the row.
+
+---
+
+.pull-left[This is the style: &lt;br&gt; ![](assets/img/image23.png) &lt;br&gt; This is the body and a table: ![](assets/img/image24.png)]
+
+
+.pull-right[![](assets/img/image25.png)]
+
+---
+#  Lists 
+
++ There are two types of lists that can be defined in HTML.
+	+ The first one is an unordered list that starts with the `&lt;ul&gt;` tag, while the other type is an ordered list specified by the `&lt;ol&gt;` tag.
+	+ Each item of both types of the list is specified by the `&lt;li&gt;` tag.
+
+---
+
+![](assets/img/image26.png)
+
+![](assets/img/image27.png)
+
+---
+
+![](assets/img/image28.png)
+
+---
+#  Blocks 
+
++ The most common elements of a website are usually called Blocks or Containers.
+	+ They are useful to group together different elements and apply the same properties. So, the elements we did until now, `&lt;h1&gt;` to `&lt;h3&gt;`, `&lt;p&gt;`, `&lt;ul&gt;`, `&lt;ol&gt;`, can form one block together.
+	+ For example, we want to divide the page into two parts. To create these two different blocks we can specify the `&lt;div&gt;` tag.
+
+---
+
+![](assets/img/image29.png)
+
+---
+
+![](assets/img/image30.png)
+
+---
+#  Difference Between XML and HTML 
+
++ XML and HTML are designed with different goals:
+	+ XML is designed to *carry* data—with focus on what data is.
+	+ HTML is designed to *display* data—with focus on how data looks.
+	+ XML tags are not predefined like HTML tags are.
+
+---
+#  XML Separates Data from Presentation 
+
++ XML does not carry any information about display.
+	+ The same XML data can be used in many different presentation scenarios.
+	+ In many HTML applications, XML is used to store or transport data, while HTML is used to format and display the same data.
+
+	
+---
+#  Regular Expressions (RegEx) 
+
++ Chapter 4.3 in Bressoud and White
+	+ Used to extract specific groups of texts from repetitive patterns that occur in a larger body of text.
+	+ Very powerful, but can get very complicated quickly!
+		+ `(?&lt;!\d)\d{4}(?!\d)`
+	+ Test first before implementing (it’s fun):
+[https://regex101.com](https://regex101.com/)
+
+&lt;img src="assets/img/image31.png" width="15%" style="display: block; margin: auto;" /&gt;
+
+
+---
+#  Regular Expressions (RegEx) 
+
++ Can use regular expressions in Python or R.
+	+ import re in Python
+&lt;img src="assets/img/image32.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+#  Regular Expressions (RegEx) 
+
++ Examples:
+
+```python
+import re
+text = "It's true that string cleaning is a topic in the chapter. string editing is another topic."
+re.findall ("string \w+\s" , text)
+['string cleaning ', 'string editing ']
+
+new_text = "new text here! "
+re.sub ( "string \w+\s" , new_text , text)
+It is true that new text here! is a topic in this chapter. new text here! is another topic.
+```
+---
+#  Regular Expressions (RegEx) 
+
++ Lazy vs greedy matching:
+
+```python
+test_string = " stackoverflow "
+greedy_regex = "s.*o"
+lazy_regex = "s.*?o"
+print("The greedy match is {re.findall(greedy_regex , test_string)[0]}")
+print("The lazy match is {re.findall(lazy_regex , test_string)[0]}")
+The greedy match is stackoverflo 
+The lazy match is stacko
+# get words between "string" and "topic"
+text = "It's true that string cleaning is a topic in the chapter. string editing is another topic."
+re.findall ( "string (.*?) topic" , text)
+['cleaning is a', 'editing is another']
+```
+
+---
+#  Web-scraping: What is Web Scraping? 
+
++ Web scraping is a technique for gathering data or information from web pages in an automated way.
++ It could be used to extract data from a website that does not have an API, or we want to extract a LOT of data which we can not do through an API due to rate limiting.
++ Through web scraping we can extract any data which we can see while browsing the web.
+
+---
+#  What is an API? 
+
++ The term API stands for “Application Programming Interface.”
++ APIs are systems that enable two software to communicate with each other using a set of protocols.
++ For example, the weather bureau’s software system contains daily weather data. The weather app on your phone “talks” to this system via APIs and shows you daily weather updates on your phone.
+
+---
+#  API Continued 
+
++ API architecture is usually explained in terms of client and server.
++ The application sending the request is called the client, and the application sending the response is called the server.
++ So in the weather example, the bureau’s weather database is the server, and the mobile app is the client.
++ Many important websites provide APIs, such as:
+	+ GitHub
+	+ IMDb (movie database)
+	+ Wikipedia
+	+ Twitter
+
+---
+#  Web Scraping vs. Using an API 
+
++ Web Scraping is not *rate limited*
++ Anonymously access the website and gather data
++ Some websites do not have an API
++ Some data is not accessible through an API
++ and many more !
+
+---
+#  Web Scraping in Real Life 
+
++ Extract product information
++ Extract job postings and internships
++ Extract offers and discounts from deal-of-the-day websites
++ Crawl forums and social websites
++ Extract data to make a search engine
++ Gather weather data
+
+---
+#  Essential Parts of Web Scraping 
+
++ Web Scraping follows this workflow:
+	+ Get the website's content - using HTTP library
+	+ Parse the HTML document - using any parsing library
+	+ Optional: Have the crawler click on “next page” and continue grabbing data for all pages
+	+ Store the results - either in a `db`, `csv`, `txt`, etc
+
+---
+#  Useful Libraries for Web Scraping 
+
++ Beautiful Soup
+	+ lxml
+	+ Selenium (we will use Selenium!)
+	+ Scrapy
+
+---
+#  When to Use Web Scraping 
+
++ Make sure to check the existence of APIs or FTP servers before scraping.
++ If only no other way of getting the data exists, consider web scraping.
++ Make sure to follow terms of use in all scraping projects. (research use is typically ok, selling scraped data for profit not ok):
+	+ E.g., https://help.instagram.com/581066165581870 
+	+ https://www.socialmediatoday.com/news/meta-launches-new-legal-proceedings-against-data-scraping-helping-to-estab/626593
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
