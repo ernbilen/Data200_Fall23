@@ -57,6 +57,11 @@ Homework           |   25   |    25.0%   |
 * [SQL Basics](https://learnsql.com/blog/sql-basics-cheat-sheet/sql-basics-cheat-sheet-a4.pdf)
 * [LaTeX Cheat Sheet](http://users.dickinson.edu/~richesod/latex/latexcheatsheet.pdf) and [an excellent tutorial](https://www.youtube.com/watch?v=NXW4cbHBthY) by Dave Richeson
 * [QuantEcon](https://quantecon.org)
-* [Eval link](https://forms.gle/kfQnUPepEHJ6MLXC6)
-<!--* [Live question link](https://itempool.com/ernbilen/live)
+* Eval link:
+  * COMP 200 (01)
+https://dickinson.campuslabs.com/eval-home/direct/9328964
+  * DATA 200 (01)
+https://dickinson.campuslabs.com/eval-home/direct/0428964
+<!-- * [Eval link](https://forms.gle/kfQnUPepEHJ6MLXC6)
+ [Live question link](https://itempool.com/ernbilen/live)
 * [Eval link](https://dickinson.campuslabs.com/courseeval)-->
